@@ -1,0 +1,27 @@
+debug: true
+spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+  datasource:
+    #ORACLE配置
+    url: jdbc:oracle:thin:@192.168.10.35:1521:ncsz
+    username: sqszuser190910
+    password: sunsoftoracle
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    druid:
+      initial-size: 8
+      min-idle: 5
+      max-active: 10
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com/example/demo/pojo
+logging:
+  level:
+    com:
+      example:
+        demo:
+          Dao: debug
+

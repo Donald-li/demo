@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Dao 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.Dao.TestUserDao">
+
+    <resultMap id="TestUser" type="com.example.demo.pojo.TestUser">
+<!--        <constructor>-->
+<!--            <idArg column="userid" javaType="int" />-->
+<!--        </constructor>-->
+        <id column="userid" property="userid"/>
+        <result column="username" property="username" />
+        <result column="pwd" property="password" />
+        <association property="adaver" javaType="com.example.demo.pojo.TestUserAdaver">
+            <id column="aid" property="aid"/>
+            <result column="adavar" property="adaver" />
+            <result column="auid" property="user_id" />
+        </association>
+    </resultMap>
+
+    <resultMap id="TestUser_Articles" type="com.example.demo.pojo.TestUser" >
+        <id column="userid" property="userid"/>
+        <result column="username" property="username" />
+        <result column="pwd" property="password" />
+        <association property="adaver" javaType="com.example.demo.pojo.TestUserAdaver">
+            <id column="aid" property="aid"/>
+            <result column="adavar" property="adaver" />
+            <result column="auid" property="user_id" />
+        </association>
+        <collection property="articles" ofType="com.example.demo.pojo.TestArticle">
+            <id column="arid" property="arid"/>
+            <result column="title" property="title" />
+            <result column="body" property="body" />
+            <result column="ar_userid" property="userid"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserById" parameterType="int" resultMap="TestUser">
+        select
+            u.user_id as userid,
+            u.username as username,
+            u.password as pwd,
+            a.adavar as adavar,
+            a.user_id as auid
+        from
+            test_users u left join test_user_adaver a
+                                   on a.user_id = u.user_id
+        where u.user_id = #{userid}
+    </select>
+
+    <select id="getAllUsers" resultMap="TestUser" >
+        select
+               u.user_id as userid,
+               u.username as username,
+               u.password as pwd,
+               a.adavar as adavar,
+               a.user_id as auid
+        from
+             test_users u left join test_user_adaver a
+                 on a.user_id = u.user_id
+    </select>
+
+    <select id="getAllUserArticlesByid" resultMap="TestUser_Articles" parameterType="int" >
+        select
+            u.user_id as userid,
+            u.username as username,
+            u.password as pwd,
+            a.adavar as adavar,
+            a.user_id as auid,
+            ar.arid as arid,
+            ar.title as title,
+            ar.body as body,
+            ar.userid as ar_userid
+        from
+            test_users u left join test_user_adaver a
+                                   on a.user_id = u.user_id
+            left join test_article ar on u.user_id = ar.userid
+        where u.user_id = #{userid} order by ar.arid ASC
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.demo.pojo.TestUser">
+        insert into test_users(user_id,username,password) values
+            (#{userid},#{username},#{password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.demo.pojo.TestUser">
+        update test_users
+        <set>
+            <if test="userid != null"> user_id = #{userid}, </if>
+            <if test="username != null"> username = #{username},</if>
+            <if test="password != null"> password = #{password}</if>
+        </set>
+        where user_id = #{userid}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from test_users
+        where user_id = #{userid}
+    </delete>
+
+</mapper>

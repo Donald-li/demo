@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Dao 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.Dao.TestArticleDao">
+
+    <resultMap id="Simple_TestArticle" type="com.example.demo.pojo.TestArticle">
+        <id column="aid" property="arid"/>
+        <result column="title" property="title" />
+        <result column="body" property="body" />
+    </resultMap>
+
+    <resultMap id="TestArticle" type="com.example.demo.pojo.TestArticle">
+        <id column="arid" property="arid"/>
+        <result column="title" property="title" />
+        <result column="body" property="body" />
+        <result column="userid" property="userid"/>
+        <association property="user" javaType="com.example.demo.pojo.TestUser" >
+            <id column="userid" property="userid"/>
+            <result column="username" property="username"/>
+            <association property="adaver" javaType="com.example.demo.pojo.TestUserAdaver">
+                <id column="aid" property="aid"/>
+                <result column="adavar" property="adaver" />
+                <result column="auid" property="user_id" />
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="getAllArticles" resultMap="TestArticle">
+        select
+            ar.ARID as arid,
+            ar.TITLE as title,
+            ar.BODY as body,
+            u.USER_ID as userid,
+            u.USERNAME as username,
+            TUA.AID as aid,
+            TUA.ADAVAR as adavar
+        from TEST_ARTICLE ar left join TEST_USERS u on ar.USERID = u.USER_ID
+        left join TEST_USER_ADAVER TUA on u.USER_ID = TUA.USER_ID
+    </select>
+
+    <select id="getArticleById" resultMap="TestArticle" parameterType="int">
+        select
+            ar.ARID as arid,
+            ar.TITLE as title,
+            ar.BODY as body,
+            u.USER_ID as userid,
+            u.USERNAME as username,
+            TUA.AID as aid,
+            TUA.ADAVAR as adavar
+        from TEST_ARTICLE ar left join TEST_USERS u on ar.USERID = u.USER_ID
+                             left join TEST_USER_ADAVER TUA on u.USER_ID = TUA.USER_ID
+        where ar.ARID = #{arid}
+    </select>
+
+    <insert id="newArticle" parameterType="com.example.demo.pojo.TestArticle">
+        insert into test_article(ARID, TITLE, BODY, USERID)  values
+        (#{arid},#{title},#{body},#{userid})
+    </insert>
+
+    <update id="updateArticle" parameterType="com.example.demo.pojo.TestArticle">
+        update TEST_ARTICLE
+        <set>
+            <if test="arid != null">arid = #{arid},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="body != null">body = #{body},</if>
+            <if test="userid != null">userid = #{userid}</if>
+        </set>
+        where arid = #{arid}
+    </update>
+
+    <delete id="deleteArticle" parameterType="int">
+        delete from TEST_ARTICLE where ARID = #{arid}
+    </delete>
+
+</mapper>
