@@ -60,14 +60,15 @@ public class YYGController {
                 map.put("yhMc",user.getYH_MC());
                 map.put("yhDm",user.getYH_DM());
                 map.put("jsDm",user.getJS_DM());
-                map.put("zzdwDm",user.getZZDM_DM());
+                map.put("zzdwDm",user.getZZDW_DM());
                 map.put("zzdwLeaf",user.getZZDw_LEAF());
+                System.out.println(user.toString());
                 String token=tokenService.generateToken(userAgent,map);
 //                tokenService.save(token,map);
                 datamap.put("token",token);
 
                 //保存Token
-
+                tokenService.save(token,map);
 
                 //在返回头部返回生成的Token
                 response.setHeader("Access-Control-Expose-Headers", "token");
@@ -78,6 +79,8 @@ public class YYGController {
                 remap.put("msg", "登录成功!");
                 remap.put("code", "1");
                 remap.put("data", datamap);
+
+                System.out.println("\n缓存："+tokenService.getYhxx(token));
                 return remap;
             }
 
@@ -85,6 +88,7 @@ public class YYGController {
             remap.put("msg", "登录失败，用户名或密码错误!");
             remap.put("code", "0");
             remap.put("data", e);
+            e.printStackTrace();
             return remap;
         }
 

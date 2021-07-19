@@ -7,6 +7,7 @@ import com.example.demo.Service.TokenService;
 import nl.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class TokenServiceImpl implements TokenService {
     @Autowired
     private RedisUtil redisUtil;
+
     @Override
     //   pc-32位加密的用户名-用户代码-年月日时分 秒-6位随机数
     //前缀 PC-NAME-USERID-CREATIONDATE-RONDEM(6位)
@@ -45,7 +47,7 @@ public class TokenServiceImpl implements TokenService {
         map.put("yh_dm",yhXxb.get("yhDm").toString());
         map.put("js_dm",yhXxb.get("jsDm").toString());
         map.put("zzdw_dm",yhXxb.get("zzdwDm").toString());
-        map.put("zzdw_jb",yhXxb.get("zzdwJb").toString());
+        map.put("zzdw_leaf",yhXxb.get("zzdwLeaf").toString());
         if(token.startsWith("PC-")){
             redisUtil.setMap(token, map);
         }else{

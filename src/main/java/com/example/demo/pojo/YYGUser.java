@@ -5,7 +5,7 @@ public class YYGUser {
     private String YH_MC;
     private String YH_MM;
     private String JS_DM;
-    private String ZZDM_DM;
+    private String ZZDW_DM;
     private String ZZDw_MC;
     private String ZZDw_LEAF;
 
@@ -44,12 +44,12 @@ public class YYGUser {
         this.JS_DM = JS_DM;
     }
 
-    public String getZZDM_DM() {
-        return ZZDM_DM;
+    public String getZZDW_DM() {
+        return ZZDW_DM;
     }
 
-    public void setZZDM_DM(String ZZDM_DM) {
-        this.ZZDM_DM = ZZDM_DM;
+    public void setZZDW_DM(String ZZDW_DM) {
+        this.ZZDW_DM = ZZDW_DM;
     }
 
     public String getZZDw_MC() {
@@ -66,5 +66,18 @@ public class YYGUser {
 
     public void setZZDw_LEAF(String ZZDw_LEAF) {
         this.ZZDw_LEAF = ZZDw_LEAF;
+    }
+
+    @Override
+    public String toString() {
+        return "YYGUser{" +
+                "YH_DM='" + YH_DM + '\'' +
+                ", YH_MC='" + YH_MC + '\'' +
+                ", YH_MM='" + YH_MM + '\'' +
+                ", JS_DM='" + JS_DM + '\'' +
+                ", ZZDW_DM='" + ZZDW_DM + '\'' +
+                ", ZZDw_MC='" + ZZDw_MC + '\'' +
+                ", ZZDw_LEAF='" + ZZDw_LEAF + '\'' +
+                '}';
     }
 }
