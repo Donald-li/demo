@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Dao 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.Dao.AppInterfaceDao">
+    <resultMap id="appconfig" type="com.example.demo.pojo.AppConfig">
+        <id property="id" column="id"/>
+        <result property="ip" column="ip"/>
+        <result property="port" column="port"/>
+        <result property="system_no" column="system_no"/>
+        <result property="path" column="path"/>
+        <result property="module_id" column="module_id"/>
+        <result property="module_mc" column="module_mc"/>
+        <result property="field_out" column="field_out"/>
+        <result property="field_in" column="field_in"/>
+    </resultMap>
+
+    <select id="getAppConfigsByModuleID" resultType="com.example.demo.pojo.AppConfig" parameterType="String">
+        select * from APPCONFIG where MODULE_ID = #{id}
+    </select>
+
+</mapper>

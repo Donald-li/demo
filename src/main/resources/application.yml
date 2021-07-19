@@ -1,4 +1,6 @@
 debug: true
+server:
+  port: 2001
 spring:
   devtools:
     restart:
@@ -24,4 +26,7 @@ logging:
       example:
         demo:
           Dao: debug
-
+Eureka:
+  client:
+    service-url:
+      defaultZone: "http://localhost:1000"
