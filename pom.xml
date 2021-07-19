@@ -62,10 +62,9 @@
         </dependency>
 
         <dependency>
-            <groupId>eu.bitwalker</groupId>
+            <groupId>nl.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <version>1.21</version>
-            <type>pom</type>
+            <version>1.2.4</version>
         </dependency>
 
         <dependency>

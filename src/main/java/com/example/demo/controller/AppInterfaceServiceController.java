@@ -1,20 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.Service.AppInterfaceService;
+import com.example.demo.Service.impl.AppInterfaceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Controller
 public class AppInterfaceServiceController {
 
     @Autowired
-    private AppInterfaceService appInterfaceService;
+    private AppInterfaceServiceImpl appInterfaceService;
 
     @PostMapping("/appinterface")
     @ResponseBody
